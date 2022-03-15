@@ -21,6 +21,8 @@ struct SlipCorrector!{S}
     end
 end
 
+SlipCorrector!(U::V) where {S, V<:AbstractVector{S}} = SlipCorrector!(U[1])
+
 function (f::SlipCorrector!{S})(U::V) where {S, V<:AbstractVector{S}}
     # assign aliases
     ψ = f.cache[1]
