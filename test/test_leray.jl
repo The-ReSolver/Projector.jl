@@ -85,10 +85,9 @@ end
     # check divergence is non-zero
     dVdy = SpectralField(grid)
     dWdz = SpectralField(grid)
-    div = SpectralField(grid)
     ddy!(U[2], dVdy)
     ddz!(U[3], dWdz)
-    div .= dVdy .+ dWdz
+    div = dVdy + dWdz
     @test norm(div) > 1e-3
 
     # initialise projector
