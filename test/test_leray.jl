@@ -53,7 +53,7 @@ end
     @test norm(div) < 1e-12
 
     # initialise projector
-    leray! = Leray!(U[1], PhysicalField(grid))
+    leray! = Leray!(U, u)
 
     # perform projection
     leray!(U)
@@ -92,7 +92,7 @@ end
     @test norm(div) > 1e-3
 
     # initialise projector
-    leray! = Leray!(U[1], PhysicalField(grid))
+    leray! = Leray!(U, u)
 
     # perform projection
     leray!(U)
