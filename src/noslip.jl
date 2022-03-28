@@ -42,11 +42,11 @@ function (f::SlipCorrector!{S})(U::V) where {S, V<:AbstractVector{S}}
 
     # compute streamwise correction field
     for nt in 1:size(gx)[3], nz in 1:size(gx)[2], ny in 1:size(gx)[1]
-        gx[ny, nz, nt] = (U[1][end, nz, nt]/dβₗdy(-1))*βₗ(U[1].grid.y[ny]) + (U[1][1, nz, nt]/dβᵤdy(1))*βᵤ(U[1].grid.y[ny])
+        gx[ny, nz, nt] = (U[1][end, nz, nt]/dβₗdy(-1))*dβₗdy(U[1].grid.y[ny]) + (U[1][1, nz, nt]/dβᵤdy(1))*dβᵤdy(U[1].grid.y[ny])
     end
 
     # modify given vector field
-    U[1] .+= gx
-    U[2] .+= gy
-    U[3] .+= gz
+    U[1] .-= gx
+    U[2] .-= gy
+    U[3] .-= gz
 end

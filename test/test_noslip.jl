@@ -58,7 +58,7 @@ end
     ws = quadweights(y, 2)
     ω = 1.0
     β = 1.0
-    u_fun(y, z, t) = sin(π*y)*exp(cos(z))*sin(t)
+    u_fun(y, z, t) = (sin(π*y) + 1)*exp(cos(z))*sin(t)
     v_fun(y, z, t) = (cos(π*y) + 1)*cos(z)*sin(t)
     w_fun(y, z, t) = π*sin(π*y)*sin(z)*sin(t)
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
