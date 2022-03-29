@@ -3,6 +3,9 @@
 
 export Leray!
 
+# TODO: the check on the field compatibility should be done simply by comparing the grids
+# TODO: add explicit comparison methods for the grid type
+
 struct Leray!{S}
     cache::Vector{S}
     lapl::Laplace
@@ -15,7 +18,7 @@ struct Leray!{S}
         cache = [similar(U) for i in 1:6]
 
         # initialise laplacian
-        lapl = Laplace(size(u)[1], size(u)[2], U.grid.dom[2], U.grid.Dy[2])
+        lapl = Laplace(size(u)[1], size(u)[2], U.grid.dom[2], U.grid.Dy[2], U.grid.Dy[1])
 
         new{S}(cache, lapl)
     end

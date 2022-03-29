@@ -100,5 +100,5 @@ end
     ddy!(U[2], dVdy)
     ddz!(U[3], dWdz)
     div .= dVdy .+ dWdz
-    @test norm(div) < 1e-11
+    @test norm(div) < 1e-6
 end
