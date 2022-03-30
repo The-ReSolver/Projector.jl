@@ -1,4 +1,4 @@
-@testset "Leray constructor         " begin
+@testset "Leray constructor             " begin
     # initialise variables and arrays
     Ny = rand(3:50)
     Nz = rand(3:50)
@@ -23,7 +23,7 @@
     @test_throws MethodError Leray!(U, rand(Float64, (Ny, Nz)))
 end
 
-@testset "Leray incompressible field" begin
+@testset "Leray incompressible field    " begin
     # construct incompressible vector field
     Ny = 64; Nz = 64; Nt = 64
     y = chebpts(Ny)
@@ -62,7 +62,7 @@ end
     @test U ≈ U_aux
 end
 
-@testset "Leray compressible field  " begin
+@testset "Leray compressible field      " begin
     # construct compressible vector field
     Ny = 64; Nz = 64; Nt = 64
     y = chebpts(Ny)

@@ -23,9 +23,9 @@ version = "1.3.1"
 
 [[ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra", "SparseArrays"]
-git-tree-sha1 = "c9a6160317d1abe9c44b3beb367fd448117679ca"
+git-tree-sha1 = "9950387274246d08af38f6eef8cb5480862a435f"
 uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.13.0"
+version = "1.14.0"
 
 [[ChebUtils]]
 deps = ["LinearAlgebra"]
@@ -71,7 +71,7 @@ version = "3.3.10+0"
 
 [[Fields]]
 deps = ["BenchmarkTools", "ChebUtils", "FFTW", "LinearAlgebra", "Random"]
-git-tree-sha1 = "3e4d88d44caef3ec4d54e1d0406c041e68e674a2"
+git-tree-sha1 = "beeede78ea02b64cf78c85f1172972a32e8d841a"
 repo-rev = "main"
 repo-url = "https://github.com/The-ReSolver/Fields.jl.git"
 uuid = "54c0c897-3bff-4ba2-acae-d4c1acf2c14a"

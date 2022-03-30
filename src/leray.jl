@@ -4,7 +4,6 @@
 export Leray!
 
 # TODO: the check on the field compatibility should be done simply by comparing the grids
-# TODO: add explicit comparison methods for the grid type
 
 struct Leray!{S}
     cache::Vector{S}
