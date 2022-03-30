@@ -3,15 +3,13 @@
 
 export Leray!
 
-# TODO: the check on the field compatibility should be done simply by comparing the grids
-
 struct Leray!{S}
     cache::Vector{S}
     lapl::Laplace
 
     function Leray!(U::S, u::P) where {T, S<:AbstractArray{Complex{T}, 3}, P<:AbstractArray{T, 3}}
-        # check sizesof arguments are compatible
-        (size(u)[1], (size(u)[2] >> 1) + 1, size(u)[3]) == size(U) || throw(ArgumentError("Arrays are not compatible sizes!"))
+        # check fields have compatible grids
+        U.grid == u.grid || throw(ArgumentError("Fields are on different grids!"))
 
         # initialised cached arrays
         cache = [similar(U) for i in 1:6]
