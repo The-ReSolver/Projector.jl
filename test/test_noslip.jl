@@ -35,7 +35,7 @@ end
                     PhysicalField(grid, v_fun),
                     PhysicalField(grid, w_fun))
     U = VectorField(grid)
-    FFT! = FFTPlan!(grid; flags=FFTW.ESTIMATE)
+    FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
     U_aux = copy(U)
 
@@ -66,7 +66,7 @@ end
                     PhysicalField(grid, v_fun),
                     PhysicalField(grid, w_fun))
     U = VectorField(grid)
-    FFT! = FFTPlan!(grid; flags=FFTW.ESTIMATE)
+    FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
 
     # initialise slip corrector
@@ -109,7 +109,7 @@ end
                     PhysicalField(grid, v_fun),
                     PhysicalField(grid, w_fun))
     U = VectorField(grid)
-    FFT! = FFTPlan!(grid; flags=FFTW.ESTIMATE)
+    FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
 
     # initialise leray projection and slip corrector

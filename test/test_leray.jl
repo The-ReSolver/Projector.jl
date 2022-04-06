@@ -40,7 +40,7 @@ end
                     PhysicalField(grid, v_fun),
                     PhysicalField(grid, w_fun))
     U = VectorField(grid)
-    FFT! = FFTPlan!(grid; flags=FFTW.ESTIMATE)
+    FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
     U_aux = VectorField(copy(U[1]), copy(U[2]), copy(U[3]))
 
@@ -79,7 +79,7 @@ end
                     PhysicalField(grid, v_fun),
                     PhysicalField(grid, w_fun))
     U = VectorField(grid)
-    FFT! = FFTPlan!(grid; flags=FFTW.ESTIMATE)
+    FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
 
     # check divergence is non-zero
