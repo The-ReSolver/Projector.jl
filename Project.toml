@@ -4,8 +4,13 @@ authors = ["Thomas Burton <tburton5572@gmail.com>"]
 version = "0.1.0"
 
 [deps]
-ChebUtils = "5c307136-fb89-411d-b568-fbf16049e5ad"
 Fields = "54c0c897-3bff-4ba2-acae-d4c1acf2c14a"
-LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 PoissonSolver = "333ac5fb-9ca8-4109-ae2c-88ac1dd5ecab"
+
+[extras]
+ChebUtils = "5c307136-fb89-411d-b568-fbf16049e5ad"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test", "LinearAlgebra", "ChebUtils"]
