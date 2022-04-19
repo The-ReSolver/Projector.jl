@@ -22,6 +22,7 @@ struct SlipCorrector!{S}
 end
 
 SlipCorrector!(U::V) where {S, V<:AbstractVector{S}} = SlipCorrector!(U[1])
+SlipCorrector!(grid::G) where {G} = SlipCorrector!(SpectralField(grid))
 
 function (f::SlipCorrector!{S})(U::V) where {S, V<:AbstractVector{S}}
     # assign aliases

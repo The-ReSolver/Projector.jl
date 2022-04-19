@@ -17,6 +17,7 @@
 
     # construct projection type
     @test typeof(Leray!(U, u)) == Leray!{typeof(U)}
+    @test typeof(Leray!(grid)) == Leray!{typeof(U)}
 
     # catch errors
     @test_throws ArgumentError Leray!(SpectralField(Grid(rand(Float64, Ny - 1), Nz, Nt, Dy, Dy2, ws, ω, β)), u)

@@ -16,6 +16,7 @@
 
     # construct correction type
     @test typeof(SlipCorrector!(U)) == SlipCorrector!{typeof(U)}
+    @test typeof(SlipCorrector!(grid)) == SlipCorrector!{typeof(U)}
 end
 
 @testset "Slip corrector without slip   " begin

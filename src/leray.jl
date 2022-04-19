@@ -22,6 +22,7 @@ struct Leray!{S}
 end
 
 Leray!(U::VS, u::VP) where {S, P, VS<:AbstractVector{S}, VP<:AbstractVector{P}} = Leray!(U[1], u[1])
+Leray!(grid::G) where {G} = Leray!(SpectralField(grid), PhysicalField(grid))
 
 function (f::Leray!{S})(U::V) where {T, S, V<:AbstractVector{S}}
     # assign aliases
