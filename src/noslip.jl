@@ -2,8 +2,6 @@
 # conditions of a rotating-plane couette flow while keeping the flow
 # incompressible.
 
-export SlipCorrector!
-
 # wall-normal functions with constant height
 βₗ(y; τ=100) =  τ*(y + 1)*exp(1 - τ*(y + 1))
 βᵤ(y; τ=100) = -τ*(y - 1)*exp(1 + τ*(y - 1))

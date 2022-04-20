@@ -1,8 +1,6 @@
 # This file contains the functionality of the Leray projection of a
 # compressible vector field in a rotating-plane couette flow.
 
-export Leray!
-
 struct Leray!{S}
     cache::Vector{S}
     lapl::Laplace
