@@ -12,11 +12,11 @@
 
     # initialise grid and field
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
-    U = SpectralField(grid)
+    U = spectralfield(grid)
 
     # construct correction type
-    @test typeof(SlipCorrector!(U)) == SlipCorrector!{typeof(U)}
-    @test typeof(SlipCorrector!(grid)) == SlipCorrector!{typeof(U)}
+    @test SlipCorrector!(U) isa SlipCorrector!{typeof(U)}
+    @test SlipCorrector!(grid) isa SlipCorrector!{typeof(U)}
 end
 
 @testset "Slip corrector without slip   " begin
@@ -32,10 +32,8 @@ end
     v_fun(y, z, t) = (cos(π*y) + 1)*cos(z)*sin(t)
     w_fun(y, z, t) = π*sin(π*y)*sin(z)*sin(t)
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
-    u = VectorField(PhysicalField(grid, u_fun),
-                    PhysicalField(grid, v_fun),
-                    PhysicalField(grid, w_fun))
-    U = VectorField(grid)
+    u = vectorfield(grid, u_fun, v_fun, w_fun)
+    U = vectorfield(grid)
     FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
     U_aux = copy(U)
@@ -63,10 +61,8 @@ end
     v_fun(y, z, t) = (cos(π*y) + 1)*cos(z)*sin(t)
     w_fun(y, z, t) = π*sin(π*y)*sin(z)*sin(t)
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
-    u = VectorField(PhysicalField(grid, u_fun),
-                    PhysicalField(grid, v_fun),
-                    PhysicalField(grid, w_fun))
-    U = VectorField(grid)
+    u = vectorfield(grid, u_fun, v_fun, w_fun)
+    U = vectorfield(grid)
     FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
 
@@ -77,8 +73,8 @@ end
     slipcorrector!(U)
 
     # check vector field is still incompressible
-    dVdy = SpectralField(grid)
-    dWdz = SpectralField(grid)
+    dVdy = spectralfield(grid)
+    dWdz = spectralfield(grid)
     ddy!(U[2], dVdy)
     ddz!(U[3], dWdz)
     div = dVdy + dWdz
@@ -106,15 +102,13 @@ end
     v_fun(y, z, t) = sin(π*y)*exp(sin(z))*atan(cos(t))
     w_fun(y, z, t) = cos(π*y)*cos(z)*exp(cos(t))
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
-    u = VectorField(PhysicalField(grid, u_fun),
-                    PhysicalField(grid, v_fun),
-                    PhysicalField(grid, w_fun))
-    U = VectorField(grid)
+    u = vectorfield(grid, u_fun, v_fun, w_fun)
+    U = vectorfield(grid)
     FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
 
     # initialise leray projection and slip corrector
-    leray! = Leray!(U, u)
+    leray! = Leray!(U)
     slipcorrector! = SlipCorrector!(U)
 
     # perform projection and correction
@@ -122,8 +116,8 @@ end
     slipcorrector!(U)
 
     # check vector field is still incompressible
-    dVdy = SpectralField(grid)
-    dWdz = SpectralField(grid)
+    dVdy = spectralfield(grid)
+    dWdz = spectralfield(grid)
     ddy!(U[2], dVdy)
     ddz!(U[3], dWdz)
     div = dVdy + dWdz

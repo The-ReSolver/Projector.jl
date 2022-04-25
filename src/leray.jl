@@ -5,24 +5,23 @@ struct Leray!{S}
     cache::Vector{S}
     lapl::Laplace
 
-    function Leray!(U::S, u::P) where {T, S<:AbstractArray{Complex{T}, 3}, P<:AbstractArray{T, 3}}
-        # check fields have compatible grids
-        U.grid == u.grid || throw(ArgumentError("Fields are on different grids!"))
-
+    function Leray!(U::AbstractArray{Complex{T}, 3}) where {T}
         # initialised cached arrays
         cache = [similar(U) for i in 1:6]
 
-        # initialise laplacian
-        lapl = Laplace(size(u)[1], size(u)[2], U.grid.dom[2], U.grid.Dy[2], U.grid.Dy[1])
+        # extract grid
+        grid = get_grid(U)
 
-        new{S}(cache, lapl)
+        # initialise laplacian
+        lapl = Laplace(size(grid)[1], size(grid)[2], get_β(grid), get_Dy2(grid), get_Dy(grid))
+
+        new{typeof(U)}(cache, lapl)
     end
 end
 
-Leray!(U::VS, u::VP) where {S, P, VS<:AbstractVector{S}, VP<:AbstractVector{P}} = Leray!(U[1], u[1])
-Leray!(grid::G) where {G} = Leray!(SpectralField(grid), PhysicalField(grid))
+Leray!(U::AbstractVector{S}) where {S} = Leray!(U[1])
 
-function (f::Leray!{S})(U::V) where {T, S, V<:AbstractVector{S}}
+function (f::Leray!{S})(U::AbstractVector{S}) where {S}
     # assign aliases
     ϕ = f.cache[1]
     dϕdy = f.cache[2]

@@ -12,15 +12,16 @@
 
     # initialise grid and field
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
-    U = SpectralField(grid)
-    u = PhysicalField(grid)
+    U = spectralfield(grid)
+    u = physicalfield(grid)
+    U_vec = vectorfield(grid)
+    u_vec = vectorfield(grid; field_type=:physical)
 
     # construct projection type
-    @test typeof(Leray!(U, u)) == Leray!{typeof(U)}
-    @test typeof(Leray!(grid)) == Leray!{typeof(U)}
+    @test Leray!(U) isa Leray!{typeof(U)}
+    @test Leray!(U_vec) isa Leray!{typeof(U)}
 
     # catch errors
-    @test_throws ArgumentError Leray!(SpectralField(Grid(rand(Float64, Ny - 1), Nz, Nt, Dy, Dy2, ws, ω, β)), u)
     @test_throws MethodError Leray!(U, rand(Float64, (Ny, Nz)))
 end
 
@@ -37,24 +38,22 @@ end
     v_fun(y, z, t) = (cos(π*y) + 1)*cos(z)*sin(t)
     w_fun(y, z, t) = π*sin(π*y)*sin(z)*sin(t)
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
-    u = VectorField(PhysicalField(grid, u_fun),
-                    PhysicalField(grid, v_fun),
-                    PhysicalField(grid, w_fun))
-    U = VectorField(grid)
+    u = vectorfield(grid, u_fun, v_fun, w_fun)
+    U = vectorfield(grid)
     FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
-    U_aux = VectorField(copy(U[1]), copy(U[2]), copy(U[3]))
+    U_aux = copy(U)
 
     # check divergence is zero
-    dVdy = SpectralField(grid)
-    dWdz = SpectralField(grid)
+    dVdy = spectralfield(grid)
+    dWdz = spectralfield(grid)
     ddy!(U[2], dVdy)
     ddz!(U[3], dWdz)
     div = dVdy + dWdz
     @test norm(div) < 1e-12
 
     # initialise projector
-    leray! = Leray!(U, u)
+    leray! = Leray!(U)
 
     # perform projection
     leray!(U)
@@ -76,23 +75,21 @@ end
     v_fun(y, z, t) = sin(π*y)*exp(sin(z))*atan(cos(t))
     w_fun(y, z, t) = (cos(π*y) + 1)*cos(z)*exp(cos(t))
     grid = Grid(y, Nz, Nt, Dy, Dy2, ws, ω, β)
-    u = VectorField(PhysicalField(grid, u_fun),
-                    PhysicalField(grid, v_fun),
-                    PhysicalField(grid, w_fun))
-    U = VectorField(grid)
+    u = vectorfield(grid, u_fun, v_fun, w_fun)
+    U = vectorfield(grid)
     FFT! = FFTPlan!(grid; flags=ESTIMATE)
     FFT!(U, u)
 
     # check divergence is non-zero
-    dVdy = SpectralField(grid)
-    dWdz = SpectralField(grid)
+    dVdy = spectralfield(grid)
+    dWdz = spectralfield(grid)
     ddy!(U[2], dVdy)
     ddz!(U[3], dWdz)
     div = dVdy + dWdz
     @test norm(div) > 1e-3
 
     # initialise projector
-    leray! = Leray!(U, u)
+    leray! = Leray!(U)
 
     # perform projection
     leray!(U)

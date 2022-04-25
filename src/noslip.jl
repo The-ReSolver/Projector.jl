@@ -11,16 +11,16 @@ dβᵤdy(y; τ=100) = -τ*exp(1 + τ*(y - 1)) - (τ^2)*(y - 1)*exp(1 + τ*(y - 1
 struct SlipCorrector!{S}
     cache::Vector{S}
 
-    function SlipCorrector!(U::S) where {T, S<:AbstractArray{Complex{T}, 3}}
+    function SlipCorrector!(U::AbstractArray{Complex{T}, 3}) where {T}
         # initialise cached arrays
         cache = [similar(U) for i in 1:4]
 
-        new{S}(cache)
+        new{typeof(U)}(cache)
     end
 end
 
-SlipCorrector!(U::V) where {S, V<:AbstractVector{S}} = SlipCorrector!(U[1])
-SlipCorrector!(grid::G) where {G} = SlipCorrector!(SpectralField(grid))
+SlipCorrector!(U::AbstractVector{S}) where {S} = SlipCorrector!(U[1])
+SlipCorrector!(grid::G) where {G} = SlipCorrector!(spectralfield(grid))
 
 function (f::SlipCorrector!{S})(U::V) where {S, V<:AbstractVector{S}}
     # assign aliases
