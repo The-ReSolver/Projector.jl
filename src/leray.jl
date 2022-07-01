@@ -20,6 +20,7 @@ struct Leray!{S}
 end
 
 Leray!(U::AbstractVector{S}) where {S} = Leray!(U[1])
+Leray!(grid) = Leray!(spectralfield(grid))
 
 function (f::Leray!{S})(U::AbstractVector{S}) where {S}
     # assign aliases

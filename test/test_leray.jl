@@ -20,6 +20,7 @@
     # construct projection type
     @test Leray!(U) isa Leray!{typeof(U)}
     @test Leray!(U_vec) isa Leray!{typeof(U)}
+    @test Leray!(grid) isa Leray!{typeof(U)}
 
     # catch errors
     @test_throws MethodError Leray!(U, rand(Float64, (Ny, Nz)))
