@@ -22,7 +22,7 @@ end
 SlipCorrector!(U::AbstractVector{S}) where {S} = SlipCorrector!(U[1])
 SlipCorrector!(grid) = SlipCorrector!(spectralfield(grid))
 
-function (f::SlipCorrector!{S})(U::V) where {S, V<:AbstractVector{S}}
+function (f::SlipCorrector!{S})(U::V; τ=100) where {S, V<:AbstractVector{S}}
     # assign aliases
     ψ = f.cache[1]
     gx = f.cache[2]
@@ -31,7 +31,7 @@ function (f::SlipCorrector!{S})(U::V) where {S, V<:AbstractVector{S}}
 
     # compute streamfunction field
     for nt in 1:size(ψ)[3], nz in 1:size(ψ)[2], ny in 1:size(ψ)[1]
-        ψ[ny, nz, nt] = -(U[3][end, nz, nt]/dβₗdy(-1))*βₗ(U[1].grid.y[ny]) - (U[3][1, nz, nt]/dβᵤdy(1))*βᵤ(U[1].grid.y[ny])
+        ψ[ny, nz, nt] = -(U[3][end, nz, nt]/dβₗdy(-1; τ=τ))*βₗ(U[1].grid.y[ny]; τ=τ) - (U[3][1, nz, nt]/dβᵤdy(1; τ=τ))*βᵤ(U[1].grid.y[ny]; τ=τ)
     end
 
     # compute correction fields from steamfunction
@@ -40,7 +40,7 @@ function (f::SlipCorrector!{S})(U::V) where {S, V<:AbstractVector{S}}
 
     # compute streamwise correction field
     for nt in 1:size(gx)[3], nz in 1:size(gx)[2], ny in 1:size(gx)[1]
-        gx[ny, nz, nt] = -(U[1][end, nz, nt]/dβₗdy(-1))*dβₗdy(U[1].grid.y[ny]) - (U[1][1, nz, nt]/dβᵤdy(1))*dβᵤdy(U[1].grid.y[ny])
+        gx[ny, nz, nt] = -(U[1][end, nz, nt]/dβₗdy(-1; τ=τ))*dβₗdy(U[1].grid.y[ny]; τ=τ) - (U[1][1, nz, nt]/dβᵤdy(1; τ=τ))*dβᵤdy(U[1].grid.y[ny]; τ=τ)
     end
 
     # modify given vector field
