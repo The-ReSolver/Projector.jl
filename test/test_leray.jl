@@ -32,7 +32,7 @@ end
     y = chebpts(Ny)
     Dy = chebdiff(Ny)
     Dy2 = chebddiff(Ny)
-    ws = quadweights(y, 2)
+    ws = chebws(Dy)
     ω = 1.0
     β = 1.0
     u_fun(y, z, t) = sin(π*y)*exp(cos(z))*sin(t)
@@ -69,7 +69,7 @@ end
     y = chebpts(Ny)
     Dy = chebdiff(Ny)
     Dy2 = chebddiff(Ny)
-    ws = quadweights(y, 2)
+    ws = chebws(Dy)
     ω = 1.0
     β = 1.0
     u_fun(y, z, t) = (1 - y^2)*exp(cos(z))*atan(sin(t))
