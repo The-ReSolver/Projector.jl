@@ -1,7 +1,7 @@
 name = "Projector"
 uuid = "abfb4c27-6a5b-4fca-8a0e-91ede93db49a"
 authors = ["Thomas Burton <tburton5572@gmail.com>"]
-version = "0.3.1"
+version = "0.3.2"
 
 [deps]
 Fields = "54c0c897-3bff-4ba2-acae-d4c1acf2c14a"
